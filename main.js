@@ -209,14 +209,14 @@ function setUpListOfListsSection() {
 
 function drawListOfLists() {
     chrome.storage.sync.get('allLists', function(allListsData) {
-        if (isEmpty(allListsData) || isEmpty(allListsData.allLists)) {
-            // TODO
-            console.log('No lists created!');
-            return;
-        } 
-        allListsData = allListsData.allLists;
         var listBox = document.getElementById('list-of-lists-box');
         listBox.innerHTML = '';
+        if (isEmpty(allListsData) || isEmpty(allListsData.allLists)) {
+            console.log('No lists created!');
+            listBox.innerHTML = 'No lists!';
+        } 
+        allListsData = allListsData.allLists;
+        
 
         var table = document.createElement('table');
         table.appendChild(document.createElement('thead'));
