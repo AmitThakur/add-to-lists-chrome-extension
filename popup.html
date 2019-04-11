@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Add To Lists</title>
+    <link rel = "stylesheet" type = "text/css" href = "style.css" />
+  </head>
+  <body>
+    <h3>Add To Lists</h3>
+    
+    <div id = "add-list-section">
+            <div class="title-box"><span id = "item-title"></span></div>
+            <div id="url-box"><span id = "url"></span></div>
+            <div id = "lists-div"></div>
+            <div id = "add-list-div">
+                    <input id= "new-list-name" type="text"/>
+                    <button id = "add-new-list-button" >Add</button>
+                    <button id = "cancel-new-list-button" >Cancel</button>
+            </div>
+            
+            <button id = "create-list-button" >Create new list</button>
+            <button id = "export-data-button" >Export data</button>
+            <button id = "all-lists-button" >Manage lists</button>    
+    </div>
+    <div id = "list-of-lists-section">
+        <div class="title-box"><span>Manage Lists</span></div>
+        <div id = "list-of-lists-box">
+        </div>
+        <button id = "go-to-main-button" >Back</button>
+        <button id = "select-all-lists-button" >Select all</button>
+        <button id = "unselect-all-lists-button" >Unselect all</button>
+        <button id = "delete-selected-lists-button" class="red-button" >Delete selected lists</button>
+    </div>
+
+    <div id = "single-list-section">
+        <div class="title-box"><span id = "list-title"></span></div>
+        <div id = "list-of-items-box" class="scroll-box"></div>
+        <button id = "go-to-main-button-2" >Back</button>
+        <button id = "select-all-items-button" >Select all</button>
+        <button id = "unselect-all-items-button" >Unselect all</button>
+        <button id = "delete-from-list-button" class="red-button" >Delete selected items</button>
+        
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+body {
+    background-color: antiquewhite;
+    width: 800px;
+    padding-left: 10px;
+}
+
+#url-box {
+    margin: 0px 10px 10px 0px;
+}
+
+#add-list-div, #create-list-button {
+    margin: 10px 10px 10px 0px;
+}
+
+#add-new-list-button {
+    margin-left: 10px;
+}
+
+.title-box {
+    font-weight: bold;
+}
+
+.list-table, .item-table {
+    margin: 10px 10px 10px 0px;
+}
+
+#list-of-items-box {
+    margin: 10px;
+}
+
+.red-button {
+    background-color: rgb(241, 185, 181);
+    outline: none;
+}
+
+.scroll-box {
+    height: 150px; 
+    overflow-y: scroll;
+}
