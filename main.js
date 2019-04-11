@@ -78,13 +78,13 @@ function isEmpty(obj) {
 
 function listCheckBoxes() {
     chrome.storage.sync.get('allLists', function(allListsData) {
+        document.getElementById('lists-div').innerHTML = '';
         if (isEmpty(allListsData) || isEmpty(allListsData.allLists)) {
-            // TODO
             console.log('No lists created!');
-            return;
+            document.getElementById('lists-div').innerHTML = 'No lists!';
         } 
         allListsData = allListsData.allLists;
-        document.getElementById('lists-div').innerHTML = '';
+        
         var url = document.getElementById('url').innerText;
         for (var key in allListsData) {
             appendListChild(key, allListsData[key].name, !isEmpty(allListsData[key].urlMap[url]));
@@ -155,6 +155,7 @@ function addItemToList(listKey, listName, title, url, afterDataUpdateCallback) {
         
         if (isEmpty(allListsData) || isEmpty(allListsData.allLists)) {
             console.log('No lists existing, adding first element');
+            document.getElementById('lists-div').innerHTML = '';
             allListsData = {};
         } else {
             allListsData = allListsData.allLists;
