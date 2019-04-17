@@ -49,10 +49,21 @@ function setUpAddListSection() {
         .addEventListener('click', function () {
             activateSections('list-of-lists-section');
         });
+    
     listCheckBoxes();
+    showUsedData();
 }
+
+function showUsedData() {
+    chrome.storage.local.getBytesInUse(null, (bytesInUse) => {
+        var percent = (bytesInUse * 100 ) / chrome.storage.local.QUOTA_BYTES;
+        document.getElementById('storage-used')
+        .innerText = 'Used storage: ' + percent.toFixed(2) + '%';
+    });
+}
+
 function exportData() {
-    chrome.storage.sync.get('allLists', function(allListsData) {
+    chrome.storage.local.get('allLists', function(allListsData) {
         var jsonData = JSON.stringify(allListsData , null, 4);
         
         var downloadLink = document.createElement('a');
@@ -66,18 +77,14 @@ function exportData() {
     
 }
 
-function importData() {
-    chrome.storage.sync.set({'allLists' : allListsData},  function () {
-    });   
-}
-
 function isEmpty(obj) {
     if (!obj) return true;
     return Object.keys(obj).length === 0 && obj.constructor === Object;
 }
 
 function listCheckBoxes() {
-    chrome.storage.sync.get('allLists', function(allListsData) {
+    chrome.storage.local.get('allLists', function(allListsData) {
+        console.log(allListsData);
         document.getElementById('lists-div').innerHTML = '';
         if (isEmpty(allListsData) || isEmpty(allListsData.allLists)) {
             console.log('No lists created!');
@@ -151,7 +158,7 @@ function onAddNewListButtonClick() {
 
 function addItemToList(listKey, listName, title, url, afterDataUpdateCallback) {
     
-    chrome.storage.sync.get('allLists', function(allListsData) {
+    chrome.storage.local.get('allLists', function(allListsData) {
         
         if (isEmpty(allListsData) || isEmpty(allListsData.allLists)) {
             console.log('No lists existing, adding first element');
@@ -169,7 +176,7 @@ function addItemToList(listKey, listName, title, url, afterDataUpdateCallback) {
             allListsData[listKey] = listVal;
         }
 
-        chrome.storage.sync.set({'allLists' : allListsData},  function () {
+        chrome.storage.local.set({'allLists' : allListsData},  function () {
             if (afterDataUpdateCallback) afterDataUpdateCallback(listKey, listName, true);
         });
         
@@ -178,7 +185,7 @@ function addItemToList(listKey, listName, title, url, afterDataUpdateCallback) {
 
 function removeItemFromList(listKey, url, callback) {
     
-    chrome.storage.sync.get('allLists', function(allListsData) {
+    chrome.storage.local.get('allLists', function(allListsData) {
         
         if (isEmpty(allListsData) || isEmpty(allListsData.allLists)) {
             return;
@@ -186,7 +193,7 @@ function removeItemFromList(listKey, url, callback) {
         allListsData = allListsData.allLists;
         delete allListsData[listKey].urlMap[url];
         
-        chrome.storage.sync.set({'allLists' : allListsData},  function () {
+        chrome.storage.local.set({'allLists' : allListsData},  function () {
             if (callback) callback(listKey);
         });
         
@@ -209,7 +216,7 @@ function setUpListOfListsSection() {
 }
 
 function drawListOfLists() {
-    chrome.storage.sync.get('allLists', function(allListsData) {
+    chrome.storage.local.get('allLists', function(allListsData) {
         var listBox = document.getElementById('list-of-lists-box');
         listBox.innerHTML = '';
         if (isEmpty(allListsData) || isEmpty(allListsData.allLists)) {
@@ -291,7 +298,7 @@ function deleteSelectedLists() {
 }
 
 function deleteLists(keys, callback) {
-    chrome.storage.sync.get('allLists', function(allListsData) {
+    chrome.storage.local.get('allLists', function(allListsData) {
         
         if (!keys || (keys.length < 1) || isEmpty(allListsData) || isEmpty(allListsData.allLists)) {
             return;
@@ -303,7 +310,7 @@ function deleteLists(keys, callback) {
             delete allListsData[keys[i]];
         }
         console.log(allListsData);
-        chrome.storage.sync.set({'allLists' : allListsData},  function () {
+        chrome.storage.local.set({'allLists' : allListsData},  function () {
             if (callback) callback();
         });
         
@@ -332,7 +339,7 @@ function setUpSingleListSection(listKey) {
 }
 
 function drawListOfItems(listKey) {
-    chrome.storage.sync.get('allLists', function(allListsData) {
+    chrome.storage.local.get('allLists', function(allListsData) {
         if (isEmpty(allListsData) || isEmpty(allListsData.allLists)) {
             // TODO
             console.log('No lists created!');
